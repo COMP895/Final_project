@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demographics</title>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style type="text/css">
+        .header{
+            padding: 10px;
+            background: #1abc9c;
+            color: white;
+
+        }
+        .title{
+            font-size: 32px;
+            padding: 15px;
+            color:white;
+        }
+
+        .titleTwo{
+            font-size: 32px;
+            padding: 15px;
+            color:white;
+            position:absolute;
+            left:600px;
+            top:20px;
+        }
+
+        .button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #1abc9c;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 24px;
+            padding: 20px;
+            width: 300px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .button:hover{
+            background-color: #3e8e41;
+            opacity: 1;
+        }
+
+        .button:active{
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        .col-3{
+            width: 20%;
+            height: 100%;
+        }
+
+        .col-9{
+
+            width: 80%;
+            height: 100%;
+        }
+        .first{
+
+
+        }
+
+        .second{
+
+        }
+
+        .item{
+            font-size: 24px;
+            color: #4cd4b0;
+            padding: 15px;
+        }
+
+
+        /* Intersection */
+
+        div {
+            width: 50%;
+            left: 221px;
+            top: 80px;
+        }
+
+        /* Legend Font Style */
+        body {
+            font: 11px sans-serif;
+            background-color: #ffffff;
+        }
+
+        /* Legend Position Style */
+        .legend {
+            position: absolute;
+            left: 20px;
+            top: 30px;
+        }
+
+        .axis text {
+            font: 10px sans-serif;
+        }
+
+        .axis line, .axis path {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .toolTip {
+            position: absolute;
+            display: none;
+            width: auto;
+            height: auto;
+            background: none repeat scroll 0 0 white;
+            border: 0 none;
+            border-radius: 8px 8px 8px 8px;
+            box-shadow: -3px 3px 15px #888888;
+            color: black;
+            font: 12px sans-serif;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="header">
+    <h1 class="title text-center"> Dataset</h1>
+    <h1 class="titleTwo text-center"; style= ""> Visualization</h1>
+</div>
+<div class="container">
+    <div class="col-3 first">
+        <div class="item">
+            <form action="/one" method = "GET">
+                <button class="button" style="vertical-align:middle"><span>April 2019 - June 2019</span></button>
+            </form>
+        </div>
+        <div class="item">
+            <form action="/two" method = "GET">
+                <button class="button" style="vertical-align:middle"><span>July 2019 - September 2019</span></button>
+            </form>
+        </div>
+        <div class="item">
+            <form action="/three" method = "GET">
+                <button class="button" style="vertical-align:middle"><span>October 2019 - December 2019</span></button>
+            </form>
+        </div>
+        <div class="item">
+            <form action="/four" method = "GET">
+                <button class="button" style="vertical-align:middle"><span>January 2020 - March 2020</span></button>
+            </form>
+        </div>
+        <div class="item">
+            <form action="/extra" method = "GET">
+                <button class="button" style="vertical-align:middle"><span>Trend View</span></button>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="col-9 second">
+        <div style = "position:absolute; left:400px; top:225px; height:420px; font-size: 30px;">Demographics</div>
+        <div id = "d3_demographic"; style = "position:absolute; left:550px; top:250px; height:420px;"></div>
+        <div  style = "position:absolute; left:450px; top:200px; height:420px;">
+            Y-Axis:
+            <select id="dropDownId2" onchange="updateQrt(this.value);">
+                <option value="0" selected>All Quarters</option>
+                <option value="1"> First Quarter 2019</option>
+                <option value="2">Second Quarter 2019</option>
+                <option value="3">Third Quarter 2019</option>
+                <option value="4">Fourth Quarter 2020</option>
+            </select>
+        </div>
+
+        <div style = "position:absolute; left:450px; top:650px; height:420px; font-size: 30px;">Revenue, Sessions, Transactions</div>
+        <div id = "my_dataviz"; style = "position:absolute; left:450px; top:750px; height:420px;"></div>
+        <div style = "position:absolute; left:450px; top:700px; height:420px;">
+            Y-Axis:
+            <select id="dropDownId" onchange="update(this.value);">
+                <option value="Sessions">Sessions</option>
+                <option value="Transactions">Transactions</option>
+                <option value="Revenue" selected>Revenue</option>
+            </select>
+        </div>
+        <span hidden id="res"><%= res %></span>
+    </div>
+</div>
+<!-- Intersection -->
+<!--
+<form action="/one" method="get">
+    <button
+            style=" border-width: 12px;
+    position:absolute; left:80px; top:20px;
+    border-style: solid;
+    width: 220px;
+    cursor:pointer;"
+    >April 2019 - June 2019
+    </button>
+</form>
+
+<form action="/two" method="get">
+    <button
+            style=" border-width: 12px;
+    position:absolute; left:320px; top:20px;
+    border-style: solid;
+    width: 220px;
+    cursor:pointer;"
+    >July 2019 - September 2019
+    </button>
+</form>
+
+<form action="/three" method="get">
+
+    <button
+            style=" border-width: 12px;
+    position:absolute; left:560px; top:20px;
+    border-style: solid;
+    width: 220px;
+    cursor:pointer;"
+    >October 2019 - December 2019
+    </button>
+</form>
+
+<form action="/four" method="GET">
+
+    <button
+            style=" border-width: 12px;
+    position:absolute; left:800px; top:20px;
+    border-style: solid;
+    width: 220px;
+    cursor:pointer;"
+    >January 2020 - March 2020
+    </button>
+</form>
+
+<form action="/extra" method="get">
+    <button
+            style=" border-width: 12px;
+    position:absolute; left:1040px; top:20px;
+    border-style: solid;
+    width: 220px;
+    cursor:pointer;"
+    >Trend View
+    </button>
+</form>
+
+
+<div style = "position:absolute; left:210px; top:100px; height:420px; font-size: 30px;">Demographics</div>
+<div id = "d3_demographic"; style = "position:absolute; left:50px; top:150px; height:420px;"></div>
+<div  style = "position:absolute; left:50px; top:150px; height:420px;">
+    Y-Axis:
+    <select id="dropDownId2" onchange="updateQrt(this.value);">
+        <option value="0" selected>All Quarters</option>
+        <option value="1"> First Quarter 2019</option>
+        <option value="2">Second Quarter 2019</option>
+        <option value="3">Third Quarter 2019</option>
+        <option value="4">Fourth Quarter 2020</option>
+    </select>
+</div>
+
+<div style = "position:absolute; left:850px; top:100px; height:420px; font-size: 30px;">Revenue, Sessions, Transactions</div>
+<div id = "my_dataviz"; style = "position:absolute; left:750px; top:150px; height:420px;"></div>
+<div style = "position:absolute; left:750px; top:150px; height:420px;">
+    Y-Axis:
+    <select id="dropDownId" onchange="update(this.value);">
+        <option value="Sessions">Sessions</option>
+        <option value="Transactions">Transactions</option>
+        <option value="Revenue" selected>Revenue</option>
+    </select>
+</div>
+<span hidden id="res"><%= res %></span>
+-->
+
+<script>
+    $(document).ready(function () {
+
+        var data = [<% for(var i = 0; i < 24; i++) { %>
+
+            {Age: "<%- res[i].Age %>", Revenue: "<%- res[i].Revenue %>", Sessions: "<%- res[i].Sessions %>"
+                , qrt: "<%- res[i].qrt %>", Quarter: "<%- res[i].Quarter %>"},
+            <% } %>];
+
+        var margin = {top: 30, right: 30, bottom: 70, left: 60},
+            width = 700 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        var div = d3.select("#d3_demographic").append("div").attr("class", "toolTip");
+
+        draw(data);
+
+        function draw(data1) {
+            d3.select("svg").remove();
+
+            // append the svg object to the body of the page
+            var svg = d3.select("#d3_demographic")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform",
+                    "translate(" + margin.left + "," + margin.top + ")");
+
+
+            var subgroups = ["Revenue","Sessions"];//data.columns.slice(1);
+            //alert(subgroups);
+            //console.log(newData);
+
+            // List of groups = species here = value of the first column called group -> I show them on the X axis
+            var groups = d3.map(data, function (d) {
+                return (d.Age)
+            }).keys()
+
+            // Add X axis
+            var x = d3.scaleBand()
+                .domain(groups)
+                .range([0, width])
+                .padding([0.2])
+            svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x).tickSize(0));
+
+            // Add Y axis
+            var y = d3.scaleLinear()
+                .domain([100000, 1000000])
+                .range([height, 0]);
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            // Another scale for subgroup position?
+            var xSubgroup = d3.scaleBand()
+                .domain(subgroups)
+                .range([0, x.bandwidth()])
+                .padding([0.05]);
+
+            // color palette = one color per subgroup
+            var color = d3.scaleOrdinal()
+                .domain(subgroups)
+                .range(['#e41a1c', '#377eb8', '#4daf4a']);
+
+            // Show the bars
+            svg.append("g")
+                .selectAll("g")
+                // Enter in data = loop group per group
+                .data(data1)
+                .enter()
+                .append("g")
+                .attr("transform", function (d) {
+                    return "translate(" + x(d.Age) + ",0)";
+                })
+                .selectAll("rect")
+                .data(function (d) {
+                    return subgroups.map(function (key) {
+                        return {key: key, value: d[key]};
+                    });
+                })
+                .enter().append("rect")
+                .attr("x", function (d) {
+                    return xSubgroup(d.key);
+                })
+                .attr("y", function (d) {
+                    return y(d.value);
+                })
+                .attr("width", xSubgroup.bandwidth())
+                .attr("height", function (d) {
+                    return height - y(d.value);
+                })
+                .attr("fill", function (d) {
+                    return color(d.key);
+                });
+
+            svg.append("text")
+                .attr("x", 250)
+                .attr("y", 345)
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .style("font-size", "15px")
+                .text("Age");
+
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", -100)
+                .attr("x", 0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .style("font-size", "15px")
+                .text("values");
+
+            //Legend
+            var legend = svg.selectAll(".legend")
+                .data(subgroups)
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; })
+                .style("opacity","0");
+
+            legend.append("rect")
+                .attr("x", width - 18)
+                .attr("width", 18)
+                .attr("height", 18)
+                .style("fill", function(d) { return color(d); });
+
+            legend.append("text")
+                .attr("x", width - 24)
+                .attr("y", 9)
+                .attr("dy", ".35em")
+                .style("text-anchor", "end")
+                .text(function(d) {return d; });
+
+            legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
+        }
+
+
+        function updateQrt(selectedVal ){
+            if (selectedVal  == "0"){
+                //alert("hi");
+                draw(data);
+            }
+            else{
+                var start;
+                var end;
+                if(selectedVal =="1"){
+                }
+                if(selectedVal =="2"){
+                    data2 = [<% for(var i = 6; i < 12; i++) {%>
+                        {Age: "<%- res[i].Age %>", Revenue: "<%- res[i].Revenue %>", Sessions: "<%- res[i].Sessions %>"
+                            , qrt: "<%- res[i].qrt %>", Quarter: "<%- res[i].Quarter %>"},
+                        <%}%>
+                    ];
+                }
+                if(selectedVal =="3"){
+                    data2 = [<% for(var i = 12; i < 18; i++) {%>
+                        {Age: "<%- res[i].Age %>", Revenue: "<%- res[i].Revenue %>", Sessions: "<%- res[i].Sessions %>"
+                            , qrt: "<%- res[i].qrt %>", Quarter: "<%- res[i].Quarter %>"},
+                        <%}%>
+                    ];
+                }
+                if(selectedVal =="4"){
+                    data2 = [<% for(var i = 18; i < 24; i++) {%>
+                        {Age: "<%- res[i].Age %>", Revenue: "<%- res[i].Revenue %>", Sessions: "<%- res[i].Sessions %>"
+                            , qrt: "<%- res[i].qrt %>", Quarter: "<%- res[i].Quarter %>"},
+                        <%}%>
+                    ];
+                }
+
+                var data2;
+                data2 = [<% for(var i = start; i < end; i++) {%>
+                    {Age: "<%- res[i].Age %>", Revenue: "<%- res[i].Revenue %>", Sessions: "<%- res[i].Sessions %>"
+                        , qrt: "<%- res[i].qrt %>", Quarter: "<%- res[i].Quarter %>"},
+                    <%}%>
+                ];
+                draw(data2);
+            }
+        }
+
+
+        $("#dropDownId2").on('change', function () {
+            var valuee = $('#dropDownId2 :selected').val();
+            //alert(typeof valuee);
+            updateQrt(valuee);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        var data = [<% for(var i = 24; i < 28; i++) { %>
+            //qrt
+            //Transactions
+            {qrt: "<%- res[i].qrt %>",Quarter: "<%- res[i].Quarter %>", Revenue: "<%- res[i].Revenue %>",
+                Sessions: "<%- res[i].Sessions%>", Transactions: "<%- res[i].Transactions %>"},
+            <% } %>];
+
+
+        var margin = {top: 30, right: 30, bottom: 70, left: 60},
+            width = 700 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+        var svg = d3.select("#my_dataviz")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+
+        // Initialize the X axis
+        var x = d3.scaleBand()
+            .range([0, width])
+            .padding(1);
+        var xAxis = svg.append("g")
+            .attr("transform", "translate(0," + height + ")");
+
+        // Initialize the Y axis
+        var y = d3.scaleLinear()
+            .range([height, 0]);
+        var yAxis = svg.append("g")
+            .attr("class", "myYaxis");
+
+        var txt = $('#dropDownId').val();
+        update(txt);
+        //update('Revenue');
+        // A function that create / update the plot for a given variable:
+        function update(selectedVar) {
+            // X axis
+            x.domain(data.map(function (d) {
+                return d.Quarter;
+            }));
+            xAxis.transition().duration(1000).call(d3.axisBottom(x));
+
+
+            // Add Y axis
+            y.domain([0, d3.max(data, function (d) {
+                return +d[selectedVar]
+            })]);
+            yAxis.transition().duration(1000).call(d3.axisLeft(y));
+
+            // variable u: map data to existing circle
+            var j = svg.selectAll(".myLine")
+                .data(data)
+            // update lines
+            j
+                .enter()
+                .append("line")
+                .attr("class", "myLine")
+                .merge(j)
+                .transition()
+                .duration(1000)
+                .attr("x1", function (d) {
+                    console.log(x(d.Quarter));
+                    return x(d.Quarter);
+                })
+                .attr("x2", function (d) {
+                    return x(d.Quarter);
+                })
+                .attr("y1", y(0))
+                .attr("y2", function (d) {
+                    return y(d[selectedVar]);
+                })
+                .attr("stroke", "grey")
+
+
+            // variable u: map data to existing circle
+            var u = svg.selectAll("circle")
+                .data(data)
+            // update bars
+            u
+                .enter()
+                .append("circle")
+                .merge(u)
+                .transition()
+                .duration(1000)
+                .attr("cx", function (d) {
+                    return x(d.Quarter);
+                })
+                .attr("cy", function (d) {
+                    return y(d[selectedVar]);
+                })
+                .attr("r", 8)
+                .attr("fill", "#69b3a2");
+
+            svg.append("text")
+                .attr("x", 300)
+                .attr("y", 345)
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .style("font-size", "15px")
+                .text("Quarters");
+
+
+        }
+
+        $("#dropDownId").on('change', function () {
+            var value = $('#dropDownId :selected').text();
+            update(value);
+        });
+
+    });
+</script>
+
+</body>
+</html>
