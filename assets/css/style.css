@@ -1,0 +1,95 @@
+body{background: lightgray;}
+a,a:hover{color: black;text-decoration: none;}
+p{margin: 0}
+.container{max-width: 100%;margin : 0 auto;}
+.content_container{min-height: 600px;background: url('../images/f8.jpg') 100% 65%;clear: both;background-size: cover;color: white}
+.left_logo{float: left;}
+.top_menu.pull-right{float: right;padding-top: 30px;}
+.top_menu.pull-right ul li {display: inline-block;margin-right: 20px;}
+.top_menu.pull-right ul li:hover{border-bottom: 2px solid firebrick;}
+.main_header{background-color: lightgray;}
+.main_header img{width: 100px}
+.main_header p{float: left;width: 100%;padding-left: 10px;line-height: 10px;margin-bottom: 15px;}
+.con_link{clear: both;float: left}
+.login_name{float: right !important;width:15% !important}
+/********footer***************/
+.footer{padding-top: 12px;}
+.footer_menu ul:nth-child(1){padding-left: 10px;float: left}
+.footer_menu ul li {display: inline-block;margin-right: 20px;}
+.footer_menu ul:nth-child(2){float: right;font-size: 22px;}
+
+/***********index.html************/
+.content_container h1{text-align: center;padding-top: 20px;}
+p.choice_poll {text-align: center;}
+p.choice_poll span{margin: 35px;font-size: 30px;cursor: pointer;padding: 4px}
+.choice_yes:hover{border-bottom: 2px solid green;}
+.choice_no:hover{border-bottom: 2px solid red;}
+.choice_yes.select{background-color: green; color:#fff}
+.choice_yes.select:hover{border-bottom: none}
+.choice_no.select{background-color: red; color:#fff}
+.choice_no.select:hover{border-bottom: none}
+.yes_block,.no_block{display: none;padding-left: 25px;}
+.yes_content p{font-size: 30px;}
+.img_pos{width: 27%;float: right;margin-top: -13%}
+.img_pos img{width: 67%;}
+.no_block p{font-size: 30px;}
+
+/***********connections.html************/
+.content_connections{clear: both;min-height: 600px;background: white;}
+.options_group {padding-top: 5px;}
+.options_group .panel-group {margin: 20px 0px;padding: 8px;background: mediumturquoise;}
+.options_group .panel-body {font-size: 22px;}
+.options_group .panel-body p {padding-bottom: 9px;}
+h4.panel-title {font-size: 30px;}
+.options_group a:hover{border-bottom: 2px solid firebrick;}
+h4.panel-title a:hover{border-bottom: none;}
+
+
+/***********connection.html************/
+.connection_content{clear: both;min-height: 600px;background: white;position: relative}
+.details_content {padding: 40px 15px 15px;width: 50%;}
+.host_img {float:left;width: 20%;padding-right: 10px;}
+.host_img img{width: 108px;height: 108px;}
+.event-response{width: 45%;position: absolute;right: 0;top: 16%;}
+.details_content h3 {padding-bottom: 30px;}
+.event-response ul{list-style-type: none;padding-top: 20px;padding-left: 90px;}
+.event-response ul li{display: inline-block;padding-right: 30px;}
+.event-response ul li button{border-radius: 7px;padding: 3px 10px;color: white;}
+.event-response ul li:nth-child(1) button{background: green;}
+.event-response ul li:nth-child(2) button{background: red;}
+.event-response ul li:nth-child(3) button{background: blue;}
+.event-response #post1 {padding-left: 90px;padding-top: 20px;}
+.event-response #post1 button{border-radius: 7px;padding: 3px 10px;color: white;margin-right: 30px;}
+.event-response #post1  button:nth-child(1){background: green;}
+.event-response #post1 button:nth-child(2){background: red;}
+.event-response #post1 button:nth-child(3){background: blue;}
+.brief_content {padding: 50px 10px 0px;}
+
+/***********savedConnection.html************/
+.savedConnection_content{clear: both;min-height: 600px;background: white;padding: 20px;}
+table, th, td {border: 1px solid black;border-collapse: collapse;text-align: center;}
+.table td, .table th{border-top: 1px solid #000;border-bottom: none !important;}
+ul.update_list{list-style-type: none;margin-bottom: 0;text-align: center;}
+ul.update_list li{display: inline-block;}
+#post2 button {margin-right: 15px;}
+#post2 button:nth-child(1){background: green;color: white;}
+#post2 button:nth-child(2){background: red;color: white;}
+
+/***********newConnection.html************/
+.newCon_content{clear: both;min-height: 600px;background: white;padding: 20px;text-align: center;}
+.newCon_content h3{color: orangered;}
+.contactForm div{padding: 15px;}
+.contactForm div label{margin-right: 20px;}
+.error{color: red;}
+input[type="submit"]{margin-left: 15px;margin-top: 15px;background: orangered;color: white;}
+/*********about.html and contact.html*****************/
+.about_content,.contact_content{clear: both;min-height: 600px;background: white;padding: 20px;text-align: center;}
+.about_content p,.contact_content p{font-size: 20px;}
+/**********Sign up **************/
+.signup_content{clear: both;min-height: 600px;background: white;padding-left: 40%;padding-top: 20px;}
+.signup_content h3{color: orangered;}
+form.signup-form label{margin-right: 20px;}
+/*********Update page*************/
+.update-content{clear: both;min-height: 600px;background: white;position: relative;padding-left: 40%;padding-top: 20px;}
+.update_form_background form label{margin-right: 20px;}
+.update_form_background form p:first-child{margin-bottom: 10px; font-weight: bold;color: orangered;}
